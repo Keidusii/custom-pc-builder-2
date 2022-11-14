@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { CART as cart } from "../shared/Cart";
 
 Vue.use(Vuex);
+Vue.config.devtools = true;
 
 const store = new Vuex.Store({
   state() {

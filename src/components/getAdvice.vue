@@ -1,9 +1,25 @@
 <template>
-  <div class="d-flex flex-column">
-    <h1 class="d-flex justify-center">Get Advice</h1>
-    <h4 class="d-flex justify-center">Whether it's by phone, or video call, I can help!</h4>
-    <p class="d-flex justify-center">Click the button to set up a time to talk!</p>
-    <button class="d-flex justify-center web-button">Get Advice</button>
+  <div>
+    <div class="d-flex flex-column">
+      <h1 class="d-flex justify-center">Get Advice</h1>
+      <h4 class="d-flex justify-center">Whether it's by phone, or video call, I can help!</h4>
+      <p class="d-flex justify-center">Click the button to set up a time to talk!</p>
+      <button class="d-flex justify-center web-button">Get Advice</button>
+    </div>
+
+    <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+    <v-card>
+      <!-- v-form -->
+    <hr />
+      <v-btn
+        class="contact-button"
+        @click="dialog = false"
+      >Close</v-btn>
+    </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -11,7 +27,7 @@ export default {
   name: 'GetAdvice',
   data() {
     return {
-      
+      dialog: false,
     }
   },
 }

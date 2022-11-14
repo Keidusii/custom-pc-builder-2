@@ -37,6 +37,19 @@
         </v-card-actions>
       </v-card>
     </v-row>
+    <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+    <v-card>
+      <!-- customization -->
+    <hr />
+      <v-btn
+        class="contact-button"
+        @click="dialog = false"
+      >Close</v-btn>
+    </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -48,6 +61,7 @@ export default {
   data() {
     return {
       PcBuilds: PCBUILDS,
+      dialog: false,
     }
   },
   methods: {

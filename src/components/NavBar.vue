@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="navbar">
     <v-dialog
       class="cart-modal"
       v-model="cartDialog"
@@ -47,11 +47,11 @@
     >
       <h3 class="logo d-flex justify-start align-center">CustomPCBuilder</h3>
       <ul class="d-flex nav-links justify-center align-center">
-        <li>Home</li>
-        <li>Find Parts</li>
-        <li>Build a PC</li>
-        <li>Get Advice</li>
-        <li>Contact Us</li>
+        <li><a href="#navbar" v-smooth-scroll>Home</a></li>
+        <li><a href="#findParts" v-smooth-scroll>Find Parts</a></li>
+        <li><a href="#buildPc" v-smooth-scroll>Build a PC</a></li>
+        <li><a href="#getAdvice" v-smooth-scroll>Get Advice</a></li>
+        <li><a href="#contactUs" v-smooth-scroll>Contact Us</a></li>
       </ul>
       <v-icon 
         class="cart justify-end align-center"
@@ -123,18 +123,19 @@ export default {
 
 .nav-links {
   text-decoration: none;
+  list-style: none;
   position: relative;
   left: -80px;
 }
 
-.nav-links li {
+.nav-links li a {
   display: inline-flex;
   margin: 0 10px;
   color: #545454;
   font-weight: bold;
 }
 
-.nav-links li:hover {
+.nav-links li a:hover {
   color: #2f2f2f;
   transition: 0.2s ease-in-out;
   cursor: pointer;

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="jumbotron">
+  <v-container class="jumbotron" id="home">
     <h1 class="text-center header">Need Help Building A PC?</h1>
     <h4 class="text-center subheader">I'm here to help!</h4>
     <v-carousel 

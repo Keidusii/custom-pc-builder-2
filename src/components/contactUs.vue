@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column" id="contactUs">
     <h2 class="d-flex justify-center">Contact Us</h2>
     <h4 class="d-flex justify-center">Have a question? Click the button for my email and phone number</h4>
     <button 

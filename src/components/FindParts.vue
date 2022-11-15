@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column" id="findParts">
     <h1 class="d-flex justify-center">Find Parts</h1>
     <h4  class="d-flex justify-center">Pc Part picker is the way to go!</h4>
     <p  class="">Go to <a href="https://pcpartpicker.com/" target="blank">PCPartPicker.com</a>

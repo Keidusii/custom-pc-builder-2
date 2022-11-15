@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column" id="buildPc">
     <h1 class="d-flex justify-center">Build a PC</h1>
     <v-row class="d-flex mx-auto justify-center">
       <v-card
@@ -27,7 +27,9 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn> Customize </v-btn>
+          <v-btn
+            @click="dialog = true"
+          > Customize </v-btn>
 
           <v-btn 
             @click="addToCart(pc)"
@@ -42,10 +44,12 @@
       width="500"
     >
     <v-card>
+      <h1 class="customize-title">Customize</h1>
+      <hr />
       <!-- customization -->
     <hr />
       <v-btn
-        class="contact-button"
+        class="customize-button"
         @click="dialog = false"
       >Close</v-btn>
     </v-card>

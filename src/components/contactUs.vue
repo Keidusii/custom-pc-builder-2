@@ -19,7 +19,7 @@
     </div>
     <hr />
       <v-btn
-        class="contact-button"
+        class="close-button web-button"
         @click="dialog = false"
       >Close</v-btn>
     </v-card>
@@ -48,5 +48,26 @@ export default {
 
 .contact-button {
   margin: 10px 15px;
+}
+
+.web-button {
+  border: 2px solid white;
+  font-weight: bold;
+  border-radius: 25px;
+  width: 125px;
+  margin: 5px auto 10px auto;
+  padding: 4px 15px;
+}
+
+.web-button:hover {
+  cursor: pointer;
+  color: black;
+  background-color: rgb(210, 210, 210);
+  border: 2px solid black;
+  transition: .3s ease-in-out;
+}
+
+.close-button {
+  margin-left: 25px;
 }
 </style>

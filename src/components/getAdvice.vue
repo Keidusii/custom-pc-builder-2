@@ -29,21 +29,21 @@
       >
         <v-text-field
           v-model="name"
-          :rules="nameRules"
+          :rules="[v => !!v || 'Name is required']"
           label="Full Name"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="email"
-          :rules="emailRules"
+          :rules="[v => !!v || 'Email is required']"
           label="Email"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="phone"
-          :rules="phoneRules"
+          :rules="[v => !!v || 'Phone number is required']"
           label="Phone"
           required
         ></v-text-field>
@@ -51,7 +51,7 @@
         <v-select
           v-model="callType"
           :items="['phone', 'email', 'video call']"
-          :rules="[v => !!v || 'Item is required']"
+          :rules="[v => !!v || 'Form of contact is required']"
           label="Best form of contact"
           required
         ></v-select>
@@ -96,14 +96,14 @@
         
         <v-select
           v-model="timeAvail"
-          :items="['9am-10am', '10am-11am', '11am-12pm', '1pm-2pm', '2pm-3pm', '3pm-4pm', '4pm-5pm', '5pm-6pm']"
-          :rules="[v => !!v || 'Item is required']"
+          :items="['9am-10am EST', '10am-11am EST', '11am-12pm EST', '1pm-2pm EST', '2pm-3pm EST', '3pm-4pm EST', '4pm-5pm EST', '5pm-6pm EST']"
+          :rules="[v => !!v || 'Time available is required']"
           label="Best time to talk"
           required
         ></v-select>
 
         <v-text-field
-          v-model="form"
+          v-model="additionalComments"
           label="Additional Comments"
         ></v-text-field>
 
@@ -111,14 +111,14 @@
           :disabled="!valid"
           color="primary"
           class="mr-4"
-          @click="submit"
+          @click="submitForm"
         >
           submit
         </v-btn>
       </v-form>
       <hr />
       <v-btn
-        class="advice-button"
+        class="web-button advice-button"
         @click="dialog = false"
       >Close</v-btn>
     </v-card>
@@ -137,8 +137,15 @@ export default {
       callType: '',
       daysAvail: [],
       timeAvail: '',
+      additionalComments: '',
+      valid: false,
     }
   },
+  methods: {
+    submitForm() {
+
+    },
+  }
 }
 </script>
 <style scoped>
@@ -151,7 +158,7 @@ export default {
   margin-right: 20px;
 }
 
-button {
+.web-button {
   border: 2px solid white;
   font-weight: bold;
   border-radius: 25px;
@@ -160,11 +167,15 @@ button {
   padding: 4px 15px;
 }
 
-button:hover {
+.web-button:hover {
   cursor: pointer;
   color: black;
   background-color: rgb(210, 210, 210);
   border: 2px solid black;
   transition: .3s ease-in-out;
+}
+
+.advice-button {
+  margin-left: 25px;
 }
 </style>

@@ -22,11 +22,17 @@ const store = new Vuex.Store({
   actions: {
     addToCart(context, item) {
       context.commit('addToCart', item);
-    }
+    },
+    removeFromCart(context, item) {
+      context.commit('removeFromCart', item);
+    },
   },
   mutations: {
     addToCart(state, item) {
       state.cart = [...state.cart, item];
+    },
+    removeFromCart(state, item) {
+      state.cart.splice(item, 1)
     },
   },
 });

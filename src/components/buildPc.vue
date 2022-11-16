@@ -8,85 +8,118 @@
         class="d-flex-inline mx-2 my-4"
         max-width="400"
       >
-      <v-card-title>{{pc.alt}}</v-card-title>
-        <v-img class="white--text pc-pics align-end" height="200px" :src="pc.src" />
+        <v-card-title>{{ pc.alt }}</v-card-title>
+        <v-img
+          class="white--text pc-pics align-end"
+          height="200px"
+          :src="pc.src"
+        />
 
-        <v-card-subtitle class="pb-0">From ${{pc.cost}} </v-card-subtitle>
+        <v-card-subtitle class="pb-0 text--primary"
+          >From ${{ pc.cost }}
+        </v-card-subtitle>
 
-        <v-card-text class="text--primary">
+        <v-card-text class="list">
           <ul>
-            <li>CPU: {{pc.cpu}}</li>
-            <li>GPU: {{pc.gpu}}</li>
-            <li>Motherboard: {{pc.motherboard}}</li>
-            <li>RAM: {{pc.ram}}</li>
-            <li>SSD: {{pc.ssd}}</li>
-            <li>CPU Cooler: {{pc.cpuCooler}}</li>
-            <li>PSU: {{pc.psu}}</li>
-            <li>Case: {{pc.case}}</li>
+            <li>CPU: {{ pc.cpu }}</li>
+            <li>GPU: {{ pc.gpu }}</li>
+            <li>Motherboard: {{ pc.motherboard }}</li>
+            <li>RAM: {{ pc.ram }}</li>
+            <li>SSD: {{ pc.ssd }}</li>
+            <li>CPU Cooler: {{ pc.cpuCooler }}</li>
+            <li>PSU: {{ pc.psu }}</li>
+            <li>Case: {{ pc.case }}</li>
           </ul>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn
-            @click="dialog = true"
-          > Customize </v-btn>
+          <v-btn @click="openCloseDialog(pc.id)"> Customize </v-btn>
 
-          <v-btn 
-            @click="addToCart(pc)"
-          > 
-            Buy Now 
-          </v-btn>
+          <v-btn @click="addToCart(pc)"> Buy Now </v-btn>
         </v-card-actions>
+
       </v-card>
+      <!-- customization dialog -->
+      <customizeDialog
+        :pc="PcBuilds[0]"
+        :dialog="dialog0"
+        @closeDialog="id => openCloseDialog(id)"
+        @addCustomToCart="newPc => addToCart(newPc)"
+      />
+      <customizeDialog
+        :pc="PcBuilds[1]"
+        :dialog="dialog1"
+        @closeDialog="id => openCloseDialog(id)"
+        @addCustomToCart="newPc => addToCart(newPc)"
+      />
+      <customizeDialog
+        :pc="PcBuilds[2]"
+        :dialog="dialog2"
+        @closeDialog="id => openCloseDialog(id)"
+        @addCustomToCart="newPc => addToCart(newPc)"
+      />
     </v-row>
-    <v-dialog
-      v-model="dialog"
-      width="500"
-    >
-    <v-card>
-      <h1 class="customize-title">Customize</h1>
-      <hr />
-      <!-- customization -->
-    <hr />
-      <v-btn
-        class="customize-button"
-        @click="dialog = false"
-      >Close</v-btn>
-    </v-card>
-    </v-dialog>
   </div>
 </template>
 <script>
 import { PCBUILDS } from "@/shared/PcBuilds";
 import store from "@/store/index";
+import customizeDialog from "./customizeDialog.vue";
 
 export default {
   name: "BuildPc",
+  components: {
+    customizeDialog,
+  },
   data() {
     return {
       PcBuilds: PCBUILDS,
-      dialog: false,
-    }
+      dialog0: false,
+      dialog1: false,
+      dialog2: false,
+      cpu: '',
+      gpu: '',
+    };
   },
   methods: {
-    addToCart(pc) {
-      store.dispatch('addToCart', pc);
+    addToCart(newPc) {
+      store.dispatch("addToCart", newPc);
+    },
+    openCloseDialog(id) {
+      switch (id) {
+        case 0: 
+          this.dialog0 = !this.dialog0;
+          break;
+        case 1:
+          this.dialog1 = !this.dialog1;
+          break;
+        case 2:
+          this.dialog2 = !this.dialog2;
+          break;
+        default:
+          this.dialog0 = !this.dialog0;
+      }
     }
-  }
+  },
 };
 </script>
 <style scoped>
 .v-card {
-  width: 350px;
-  height: 575px;
+  width: 100%;
+  height: 560px;
 }
 .v-image {
   width: 200px;
   margin: 0 auto;
 }
 
+.list {
+  padding-bottom: 0;
+}
+
 ul {
   height: 190px;
+  margin-bottom: 0;
 }
 
 li {

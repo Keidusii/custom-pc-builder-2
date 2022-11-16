@@ -145,7 +145,7 @@ export default {
     },
     addCustomToCart(pc) {
       // create copy of pc object to prevent ruining entire website!!!
-      let newPc = Object.assign({}, pc);
+      let newPc = {...pc};
 
       newPc.cpu = pc.altCpus[this.altCpuId];
       newPc.gpu = pc.altGpus[this.altGpuId];

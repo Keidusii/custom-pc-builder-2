@@ -16,7 +16,7 @@ const store = new Vuex.Store({
       return state.cart;
     },
     totalCost(state) {
-      return state.cart.reduce((acc, pc) => acc + pc.cost, 0)
+      return state.cart.reduce((acc, pc) => acc + pc.cost, 0).toFixed(2);
     }
   },
   actions: {

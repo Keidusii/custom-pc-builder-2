@@ -4,7 +4,7 @@
       <h1 class="customize-title">Customize</h1>
       <hr />
       <img
-        :src="pc.src"
+        :src="require(`../assets/images/${pc.src}`)"
         :alt="pc.alt"
         class="customize-img d-flex mx-auto align-center"
       />
@@ -103,13 +103,11 @@
         </b-card>
       </div>
       <hr />
-      <div class="footer d-flex mx-auto justify-end align-center">
-        <span class="alt-cost totalCost">Total Cost: ${{totalCost}} </span>
-        <v-btn class="customize-button web-button" @click="closeDialog(pc.id)">Close</v-btn>
-        <v-btn class="customize-button web-button" @click="addCustomToCart(pc)"
-          >Add to Cart</v-btn
-        >
-      </div>
+      <p class="my-auto"><strong>Total Cost: ${{totalCost}}</strong></p>
+      <v-btn class="customize-button web-button" @click="closeDialog(pc.id)">Close</v-btn>
+      <v-btn class="customize-button web-button" @click="addCustomToCart(pc)"
+        >Add to Cart</v-btn
+      >
     </v-card>
   </v-dialog>
 </template>
@@ -190,6 +188,8 @@ export default {
   font-weight: bold;
   border-radius: 25px;
   width: 125px;
+  margin: 5px auto 10px 25px;
+  padding: 4px 15px;
 }
 
 .web-button:hover {

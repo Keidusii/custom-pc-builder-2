@@ -1,7 +1,7 @@
 export const PCBUILDS = [
     {
         id: 0,
-        src: require("../assets/images/pc-1.jpg"),
+        src: "pc-1.jpg",
         alt: "PC #1",
         cost: 1200,
         cpu: "Intel Core i5 11th Gen 11400F",
@@ -19,7 +19,7 @@ export const PCBUILDS = [
     },
     {
         id: 1,
-        src: require("../assets/images/pc-2.jpg"),
+        src: "pc-2.jpg",
         alt: "PC #2",
         cost: 1400,
         cpu: "AMD Ryzen 5 3600",
@@ -37,7 +37,7 @@ export const PCBUILDS = [
     },
     {
         id: 2,
-        src: require("../assets/images/pc-3.jpg"),
+        src: "pc-3.jpg",
         alt: "PC #3",
         cost: 2300,
         cpu: "AMD Ryzen 7 3700X",

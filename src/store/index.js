@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { CART as cart } from "../shared/Cart";
+import axios from "axios";
+// import { CART as cart } from "../shared/Cart";
 
 Vue.use(Vuex);
 Vue.config.devtools = true;
@@ -8,7 +9,7 @@ Vue.config.devtools = true;
 const store = new Vuex.Store({
   state() {
     return {
-      cart: cart,
+      cart: [],
     };
   },
   getters: {
@@ -16,23 +17,34 @@ const store = new Vuex.Store({
       return state.cart;
     },
     totalCost(state) {
-      return state.cart.reduce((acc, pc) => acc + pc.cost, 0).toFixed(2);
+      return state.cart.reduce((acc, { pc }) => acc + pc.cost, 0).toFixed(2);
     }
   },
   actions: {
-    addToCart(context, item) {
-      context.commit('addToCart', item);
+    async fetchCart(context) {
+      const response = await axios.get('http://localhost:5002/cart');
+      let items = response.data;
+      items.forEach(item => {
+        item.pc.id = item.id
+      });
+      context.commit('setCart', items);
     },
-    removeFromCart(context, item) {
-      context.commit('removeFromCart', item);
+    async addToCart(context, item) {
+      await axios.post('http://localhost:5002/cart', {pc: item});
+    },
+    async removeFromCart(context, item) {
+      await axios.delete('http://localhost:5002/cart', {data: {id: item}});
     },
   },
   mutations: {
-    addToCart(state, item) {
-      state.cart = [...state.cart, item];
+    setCart(state, items) {
+      state.cart = items;
     },
-    removeFromCart(state, item) {
-      state.cart.splice(item, 1)
+    async addToCart(state, item) {
+      await axios.post('http://localhost:5002/cart', {pc: item});
+    },
+    async removeFromCart(state, item) {
+      await axios.delete('http://localhost:5002/cart', {data: {id: item}});
     },
   },
 });

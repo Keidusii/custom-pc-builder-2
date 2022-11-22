@@ -12,7 +12,7 @@
         <v-img
           class="white--text pc-pics align-end"
           height="200px"
-          :src="pc.src"
+          :src="require(`../assets/images/${pc.src}`)"
         />
 
         <v-card-subtitle class="pb-0 text--primary"
@@ -84,6 +84,9 @@ export default {
   methods: {
     addToCart(newPc) {
       store.dispatch("addToCart", newPc);
+      setTimeout(() => {
+        store.dispatch('fetchCart');
+      }, 50)
     },
     openCloseDialog(id) {
       switch (id) {

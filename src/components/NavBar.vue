@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <!-- cart -->
     <v-dialog
       class="cart-modal"
       v-model="cartDialog"
@@ -10,24 +11,24 @@
         <p v-if="cart.length === 0">Your Cart is Empty</p>
         <div 
           v-else 
-          v-for="(item,index) in cart"
-          :key="index"
+          v-for="({pc}) in cart"
+          :key="pc.id"
           class="cart-item row d-flex justify-space-around align-center">
           <hr />
-          <img class="item-img" :src="item.src" :alt="item.alt" />
+          <img class="item-img" :src="require(`../assets/images/${pc.src}`)" :alt="pc.alt" />
           <div class="column">
             <ul class="item-description">
-              <li><strong>{{item.alt}}</strong></li>
-              <li>{{item.cpu}}</li>
-              <li>{{item.gpu}}</li>
+              <li><strong>{{pc.alt}}</strong></li>
+              <li>{{pc.cpu}}</li>
+              <li>{{pc.gpu}}</li>
             </ul>
           </div>
-          <strong>${{item.cost}}</strong>
+          <strong>${{pc.cost}}</strong>
           <v-icon 
-            class="d-flex justify-end align-center"
+            class="d-flex justify-end align-center remove-button"
             color="#FF4040"
             dense
-            @click="removeFromCart(index)">
+            @click="removeFromCart(pc.id)">
             fa fa-times
           </v-icon>
         </div>
@@ -42,6 +43,8 @@
         >Check Out</v-btn>
       </v-card>
     </v-dialog>
+
+    <!-- navbar -->
     <div
       class="navbar d-flex justify-space-between align-center"
     >
@@ -70,12 +73,6 @@
           variant="danger">{{cart.length}}
         </b-badge>
       </button>
-      <v-icon 
-        class="bars justify-end align-center"
-        color="#FFFFFF"
-        dense>
-        fa fa-bars
-      </v-icon>
     </div>
   </div>
 </template>
@@ -100,9 +97,15 @@ export default {
     cartDialog: false
   }),
   methods: {
-    removeFromCart(index) {
-      store.commit('removeFromCart', index);
+    removeFromCart(id) {
+      store.commit('removeFromCart', id);
+      setTimeout(() => {
+        store.dispatch('fetchCart');
+      }, 50)
     }
+  },
+  created() {
+    store.dispatch('fetchCart');
   }
 }
 </script>
@@ -183,15 +186,6 @@ export default {
   right: 20px;
 }
 
-.bars {
-  display: none !important;
-  background-color: #6C757D;
-  font-size: 24px;
-  padding: 10px 12px;
-  border-radius: 5px;
-  margin-left: 15px;
-}
-
 .cart:hover, .bars:hover {
   background-color: #363636;
   cursor: pointer;
@@ -201,11 +195,16 @@ export default {
   padding: 0 45px;
 }
 
+.remove-button:hover {
+  cursor: pointer;
+  color: #2f2f2f;
+  transition: 0.2s ease-in-out;
+}
+
 hr {
   margin: 10px 0;
   width: 100%;
 }
-
 .web-button {
   border: 2px solid white;
   font-weight: bold;
@@ -224,12 +223,8 @@ hr {
 }
 
 @media screen and (max-width: 1000px) {
-  .cart {
+  .nav-links {
     display: none !important;
-  }
-
-  .bars {
-    display: flex !important;
   }
 }
 </style>

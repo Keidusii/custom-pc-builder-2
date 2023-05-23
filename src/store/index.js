@@ -31,6 +31,7 @@ const store = new Vuex.Store({
     },
     async addToCart(context, item) {
       await axios.post('http://localhost:5002/cart', {pc: item});
+      context.dispatch('fetchCart');
     },
     async removeFromCart(context, item) {
       await axios.delete('http://localhost:5002/cart', {data: {id: item}});

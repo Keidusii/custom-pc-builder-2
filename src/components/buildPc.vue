@@ -35,7 +35,7 @@
         <v-card-actions>
           <v-btn @click="openCloseDialog(pc.id)"> Customize </v-btn>
 
-          <v-btn @click="addToCart(pc)"> Buy Now </v-btn>
+          <v-btn class="buy-now-btn" @click="addToCart(pc)"> Buy Now </v-btn>
         </v-card-actions>
 
       </v-card>
@@ -84,9 +84,6 @@ export default {
   methods: {
     addToCart(newPc) {
       store.dispatch("addToCart", newPc);
-      setTimeout(() => {
-        store.dispatch('fetchCart');
-      }, 50)
     },
     openCloseDialog(id) {
       switch (id) {

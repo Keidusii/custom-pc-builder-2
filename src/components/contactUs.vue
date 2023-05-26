@@ -3,7 +3,7 @@
     <h2 class="d-flex justify-center">Contact Us</h2>
     <h4 class="d-flex justify-center">Have a question? Click the button for my email and phone number</h4>
     <button 
-      class="d-flex justify-center web-button" 
+      class="d-flex justify-center web-button open-contact" 
       @click="dialog=true"
     >Contact Us</button>
     <v-dialog
@@ -19,7 +19,7 @@
     </div>
     <hr />
       <v-btn
-        class="close-button web-button"
+        class="close-button web-button close-contact"
         @click="dialog = false"
       >Close</v-btn>
     </v-card>
@@ -27,12 +27,13 @@
   </div>
 </template>
 <script>
+
 export default {
   name: 'ContactUs',
   data() {
     return {
       dialog: false,
-    }
+    };
   },
 }
 </script>

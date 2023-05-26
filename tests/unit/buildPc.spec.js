@@ -43,14 +43,7 @@ describe('buildPc.vue', () => {
     axiosGetStub.resolves({});
     axiosPostStub.resolves({});
 
-    chai.expect(axiosPostStub.called).to.be.true;
+    chai.expect(axiosPostStub.calledOnce).to.be.true;
     chai.expect(axiosGetStub.calledOnce).to.be.true;
   });
-
-  // it('Closes modal on button click', async () => {
-  //   wrapper.find('.contact-button').trigger('click');
-  //   await wrapper.vm.$nextTick();
-
-  //   expect(wrapper.vm.$data.dialog).toBe(false);
-  // });
 })

@@ -17,24 +17,41 @@ const store = new Vuex.Store({
       return state.cart;
     },
     totalCost(state) {
-      return state.cart.reduce((acc, { pc }) => acc + pc.cost, 0).toFixed(2);
+      return state.cart.reduce((acc, pc ) => acc + pc.cost, 0).toFixed(2);
     }
   },
   actions: {
     async fetchCart(context) {
+      try {
       const response = await axios.get('http://localhost:5002/cart');
-      let items = response.data;
-      items.forEach(item => {
-        item.pc.id = item.id
-      });
-      context.commit('setCart', items);
+      const items = response?.data || [];
+      let pcs = [];
+      if (items) {
+        for (let i = 0; i < items.length; i++) {
+          pcs.push(items[i].pc);
+          pcs[i].id = items[i].id
+        }
+      }
+      context.commit('setCart', pcs);
+      } catch (err) {
+        console.log(err)
+      }
     },
     async addToCart(context, item) {
-      await axios.post('http://localhost:5002/cart', {pc: item});
-      context.dispatch('fetchCart');
+      try {
+        await axios.post('http://localhost:5002/cart', {pc: item});
+        context.dispatch('fetchCart');
+      } catch(err) {
+        console.log(err);
+      }
     },
     async removeFromCart(context, item) {
-      await axios.delete('http://localhost:5002/cart', {data: {id: item}});
+      try {
+        await axios.delete('http://localhost:5002/cart', {data: {id: item}});
+        await context.dispatch('fetchCart');
+      } catch(err) {
+        console.log(err);
+      }
     },
   },
   mutations: {

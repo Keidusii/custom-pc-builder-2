@@ -8,10 +8,10 @@
     >
       <v-card class="cart-card">
         <h1 class="cart-title">Cart</h1>
-        <p v-if="cart.length === 0">Your Cart is Empty</p>
+        <p v-if="cart.length === 0" class="cart-empty">Your Cart is Empty</p>
         <div 
           v-else 
-          v-for="({pc}) in cart"
+          v-for="(pc) in cart"
           :key="pc.id"
           class="cart-item row d-flex justify-space-around align-center">
           <hr />
@@ -35,7 +35,7 @@
         <hr />
         <p><strong>Total Cost: ${{this.totalCost}}</strong></p>
         <v-btn
-          class="web-button cart-button"
+          class="web-button cart-button close-cart"
           @click="cartDialog=false"
         >Close</v-btn>
         <v-btn
@@ -58,7 +58,7 @@
       </ul>
       <button 
         @click="cartDialog=true" 
-        class="cart justify-center align-center"
+        class="cart justify-center align-center open-cart"
       >
         <v-icon 
           color="#FFFFFF"
@@ -94,14 +94,11 @@ export default {
     },
   },
   data: () => ({
-    cartDialog: false
+    cartDialog: false,
   }),
   methods: {
-    removeFromCart(id) {
-      store.commit('removeFromCart', id);
-      setTimeout(() => {
-        store.dispatch('fetchCart');
-      }, 50)
+    async removeFromCart(id) {
+      await store.dispatch('removeFromCart', id);
     }
   },
   created() {

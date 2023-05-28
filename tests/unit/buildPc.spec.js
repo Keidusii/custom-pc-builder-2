@@ -6,7 +6,9 @@ import sinon from 'sinon';
 import axios from 'axios';
 import buildPc from '../../src/components/buildPc.vue';
 import chai from './common';
+import BootstrapVue from 'bootstrap-vue';
 
+Vue.use(BootstrapVue);
 Vue.use(Vuetify);
 
 new Vue({
@@ -21,7 +23,7 @@ describe('buildPc.vue', () => {
     componentData = {
       dialog: false,
     };
-
+    
     axiosGetStub = sinon.stub(axios, 'get');
     axiosPostStub = sinon.stub(axios, 'post');
     wrapper = mount(buildPc, {
@@ -45,5 +47,12 @@ describe('buildPc.vue', () => {
 
     chai.expect(axiosPostStub.calledOnce).to.be.true;
     chai.expect(axiosGetStub.calledOnce).to.be.true;
+  });
+
+  it('Opens customize dialog on button click', async () => {
+    wrapper.find('.customize-btn').trigger('click');
+    await wrapper.vm.$nextTick();
+
+    chai.expect(wrapper.vm.$data.dialog0).to.be.true;
   });
 })

@@ -33,7 +33,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn @click="openCloseDialog(pc.id)"> Customize </v-btn>
+          <v-btn class="customize-btn" @click="openCloseDialog(pc.id)"> Customize </v-btn>
 
           <v-btn class="buy-now-btn" @click="addToCart(pc)"> Buy Now </v-btn>
         </v-card-actions>

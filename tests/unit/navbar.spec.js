@@ -50,7 +50,10 @@ describe('navbar.vue', () => {
       vuetify,
     });
 
+    const cartLength = wrapper.vm._computedWatchers.cart.value.length;
+
     chai.expect(axiosGetStub.calledOnce).to.be.true;
+    chai.expect(cartLength).to.equal(3);
   });
 
   it('Deletes item from cart on button click', async () => {
@@ -64,12 +67,12 @@ describe('navbar.vue', () => {
         return { cartDialog: true }
       }
     });
-    // console.log('BEFORE:',wrapper.vm._computedWatchers.cart.value)
+
     wrapper.find('.remove-button').trigger('click');
     await wrapper.vm.$nextTick();
-    // console.log('AFTER:', wrapper.vm._computedWatchers.cart.value)
+    
     chai.expect(axiosDeleteStub.calledOnce).to.be.true;
-    chai.expect(axiosGetStub.called).to.be.true;
+    chai.expect(axiosGetStub.calledTwice).to.be.true;
   });
 
   it('Displays proper text when cart is empty', async () => {
@@ -81,7 +84,10 @@ describe('navbar.vue', () => {
       }
     });
     
+    const cartLength = wrapper.vm._computedWatchers.cart.value.length;
+
     chai.expect(axiosGetStub.calledOnce).to.be.true;
+    chai.expect(cartLength).to.equal(0);
     chai.expect(wrapper.find('.cart-empty').text()).to.match(new RegExp('Cart is Empty'));
   });
 
@@ -103,17 +109,20 @@ describe('navbar.vue', () => {
   });
 
   it('Displays cart modal on button click', async () => {
+    axiosGetStub.resolves(cart);
     const wrapper = await mount(NavBar, {
       vuetify,
       data() {
         return { cartDialog: false };
       }
     });
-    axiosGetStub.resolves(cart);
+
     wrapper.find('.open-cart').trigger('click');
     await wrapper.vm.$nextTick();
 
+    chai.expect(axiosGetStub.calledOnce).to.be.true;
     chai.expect(wrapper.vm.$data.cartDialog).to.be.true;
+    chai.expect(wrapper.find('.cart-title').text()).to.match(new RegExp('Cart'));
   });
 
   it('Closes cart modal on button click', async () => {
@@ -128,8 +137,8 @@ describe('navbar.vue', () => {
     wrapper.find('.close-cart').trigger('click');
     await wrapper.vm.$nextTick();
 
-    chai.expect(wrapper.vm.$data.cartDialog).to.be.false;
     chai.expect(axiosGetStub.calledOnce).to.be.true;
+    chai.expect(wrapper.vm.$data.cartDialog).to.be.false;
   });
 
   it('Displays badge when cart is not empty', async () => {
@@ -142,8 +151,8 @@ describe('navbar.vue', () => {
     });
     const cartLength = wrapper.vm._computedWatchers.cart.value.length;
 
-    chai.expect(wrapper.find('.badge').text()).to.match(new RegExp('3'));
-    chai.expect(cartLength).to.equal(3);
     chai.expect(axiosGetStub.calledOnce).to.be.true;
+    chai.expect(cartLength).to.equal(3);
+    chai.expect(wrapper.find('.badge').text()).to.match(new RegExp('3'));
   });
 })

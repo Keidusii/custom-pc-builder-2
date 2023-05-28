@@ -11,6 +11,7 @@ import { FETCH_CART_RESPONSE } from '@/shared/TestCart';
 
 Vue.use(VueSmoothScroll)
 Vue.use(Vuetify);
+document.body.setAttribute('data-app', true)
 
 new Vue({
   vuetify: new Vuetify()

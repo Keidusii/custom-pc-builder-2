@@ -6,6 +6,7 @@ import ContactUs from '../../src/components/contactUs.vue';
 import chai from './common';
 
 Vue.use(Vuetify);
+document.body.setAttribute('data-app', true)
 
 new Vue({
   vuetify: new Vuetify()

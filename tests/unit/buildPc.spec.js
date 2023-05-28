@@ -10,7 +10,7 @@ import BootstrapVue from 'bootstrap-vue';
 
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
-document.body.setAttribute('data-app', true)
+document.body.setAttribute('data-app', true);
 
 new Vue({
   vuetify: new Vuetify()

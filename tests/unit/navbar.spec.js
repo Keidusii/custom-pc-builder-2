@@ -9,9 +9,9 @@ import chai from './common';
 import VueSmoothScroll from 'vue2-smooth-scroll';
 import { FETCH_CART_RESPONSE } from '@/shared/TestCart';
 
-Vue.use(VueSmoothScroll)
+Vue.use(VueSmoothScroll);
 Vue.use(Vuetify);
-document.body.setAttribute('data-app', true)
+document.body.setAttribute('data-app', true);
 
 new Vue({
   vuetify: new Vuetify()
@@ -22,7 +22,7 @@ describe('navbar.vue', () => {
 
   const cart = {
     data: FETCH_CART_RESPONSE
-  }
+  };
 
   const deleteFetch = { 
     data: cart.data.slice(0,2)

@@ -1,11 +1,10 @@
 FROM node:14
 
-
-MAINTAINER Markeidus Hall II
-
 WORKDIR /custom-pc-builder
 COPY . /custom-pc-builder
 
-RUN npm ci
+RUN npm ci && cd server && npm ci
 
-ENTRYPOINT ["npm", "run", "serve"]
+WORKDIR /custom-pc-builder/server
+
+ENTRYPOINT ["npm", "start"]

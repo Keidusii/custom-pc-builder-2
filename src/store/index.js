@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-// import { CART as cart } from "../shared/Cart";
+// import { CART as cart } from "../shared'/cart'";
 
 Vue.use(Vuex);
 Vue.config.devtools = true;
@@ -23,23 +23,23 @@ const store = new Vuex.Store({
   actions: {
     async fetchCart(context) {
       try {
-      const response = await axios.get('http://localhost:5002/cart');
-      const items = response?.data || [];
-      let pcs = [];
-      if (items) {
-        for (let i = 0; i < items.length; i++) {
-          pcs.push(items[i].pc);
-          pcs[i].id = items[i].id
+        const response = await axios.get('/cart');
+        const items = response?.data || [];
+        let pcs = [];
+        if (items) {
+          for (let i = 0; i < items.length; i++) {
+            pcs.push(items[i].pc);
+            pcs[i].id = items[i].id
+          }
         }
-      }
-      context.commit('setCart', pcs);
+        context.commit('setCart', pcs);
       } catch (err) {
         console.log(err)
       }
     },
     async addToCart(context, item) {
       try {
-        await axios.post('http://localhost:5002/cart', {pc: item});
+        await axios.post('/cart', {pc: item});
         context.dispatch('fetchCart');
       } catch(err) {
         console.log(err);
@@ -47,7 +47,7 @@ const store = new Vuex.Store({
     },
     async removeFromCart(context, item) {
       try {
-        await axios.delete('http://localhost:5002/cart', {data: {id: item}});
+        await axios.delete('/cart', {data: {id: item}});
         await context.dispatch('fetchCart');
       } catch(err) {
         console.log(err);
@@ -59,10 +59,10 @@ const store = new Vuex.Store({
       state.cart = items;
     },
     async addToCart(state, item) {
-      await axios.post('http://localhost:5002/cart', {pc: item});
+      await axios.post('/cart', {pc: item});
     },
     async removeFromCart(state, item) {
-      await axios.delete('http://localhost:5002/cart', {data: {id: item}});
+      await axios.delete('/cart', {data: {id: item}});
     },
   },
 });

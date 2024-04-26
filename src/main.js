@@ -4,8 +4,10 @@ import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import bootstrapVue from './plugins/bootstrap-vue';
 import vueSmoothScroll from './plugins/vue-smooth-scroll';
+import axios from 'axios';
 
 import '@fortawesome/fontawesome-free/css/all.css';
+axios.defaults.baseURL = 'http://localhost:5002';
 
 Vue.config.productionTip = false
 

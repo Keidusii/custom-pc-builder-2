@@ -12,7 +12,7 @@
         <v-img
           class="white--text pc-pics align-end"
           height="200px"
-          :src="require(`../assets/images/${pc.src}`)"
+          :src="getImage(pc.src)"
         />
 
         <v-card-subtitle class="pb-0 text--primary"
@@ -62,8 +62,8 @@
   </div>
 </template>
 <script>
-import { PCBUILDS } from "@/shared/PcBuilds";
-import store from "@/store/index";
+import { PCBUILDS } from "../shared/PcBuilds";
+import store from "../store/index";
 import customizeDialog from "./customizeDialog.vue";
 
 export default {
@@ -99,6 +99,9 @@ export default {
         default:
           this.dialog0 = !this.dialog0;
       }
+    },
+    getImage(src) {
+      return new URL(`../assets/images/${src}`, import.meta.url).href;
     }
   },
 };

@@ -9,13 +9,13 @@
       <v-card class="cart-card">
         <h1 class="cart-title">Cart</h1>
         <p v-if="cart.length === 0" class="cart-empty">Your Cart is Empty</p>
-        <div 
+        <div
           v-else 
           v-for="(pc) in cart"
           :key="pc.id"
           class="cart-item row d-flex justify-space-around align-center">
           <hr />
-          <img class="item-img" :src="require(`../assets/images/${pc.src}`)" :alt="pc.alt" />
+          <img class="item-img" :src="getImage(pc.src)" :alt="pc.alt" />
           <div class="column">
             <ul class="item-description">
               <li><strong>{{pc.alt}}</strong></li>
@@ -77,7 +77,7 @@
   </div>
 </template>
 <script>
-import store from '@/store/index';
+import store from '../store/index';
 import { BBadge } from 'bootstrap-vue';
 
 export default {
@@ -99,6 +99,9 @@ export default {
   methods: {
     async removeFromCart(id) {
       await store.dispatch('removeFromCart', id);
+    },
+    getImage(src) {
+      return new URL(`../assets/images/${src}`, import.meta.url).href;
     }
   },
   created() {

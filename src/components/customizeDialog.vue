@@ -4,7 +4,7 @@
       <h1 class="customize-title">Customize</h1>
       <hr />
       <img
-        :src="require(`../assets/images/${pc.src}`)"
+        :src="getImage(pc.src)"
         :alt="pc.alt"
         class="customize-img d-flex mx-auto align-center"
       />
@@ -151,6 +151,9 @@ export default {
       
       this.$emit('addCustomToCart', newPc);
       this.closeDialog(this.pc.id);
+    },
+    getImage(src) {
+      return new URL(`../assets/images/${src}`, import.meta.url).href;
     }
   }
 };

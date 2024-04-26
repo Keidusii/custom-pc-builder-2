@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; 
 import { mount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuetify from 'vuetify';

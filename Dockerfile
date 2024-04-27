@@ -1,11 +1,11 @@
-FROM node:14-slim as build
+FROM node:20-slim as build
 
 WORKDIR /custom-pc-builder 
 COPY . /custom-pc-builder
 RUN npm ci
 RUN npm run build
 
-FROM node:14-slim
+FROM node:20-slim
 WORKDIR /custom-pc-builder 
 COPY --from=build custom-pc-builder/dist ./dist
 COPY --from=build custom-pc-builder/server ./server

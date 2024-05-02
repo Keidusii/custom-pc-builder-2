@@ -44,11 +44,62 @@
       </v-card>
     </v-dialog>
 
+    <!-- login -->
+    <v-dialog
+      class="login-modal"
+      v-model="loginDialog"
+      width="500"
+      @click:outside="closeLoginModal()"
+    >
+      <v-card class="login-card">
+        <h1>{{ registerView ? 'Register' : 'Login' }}</h1>
+        <hr />
+        <v-form class="login-form">
+          <v-text-field
+            v-model="email"
+            :rules="[ v => !!v || 'Required' ]"
+            label="E-mail"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :rules="[ v => !!v || 'Required' ]"
+            label="Password"
+          ></v-text-field>
+          <v-text-field
+            v-if="registerView"
+            v-model="confirmPassword"
+            :rules="[ v => v === password || 'Passwords do not match' ]"
+            label="Confirm Password"
+          ></v-text-field>
+          <p
+            v-if="!registerView"
+            class="login-view-switch"
+            @click="switchLoginView()"
+          >Don't Have an account? Register</p>
+          <p
+            v-else
+            class="login-view-switch"
+            @click="switchLoginView()"
+          >Already have an account? Login</p>
+        </v-form>
+        <v-btn
+          class="web-button cart-button close-cart"
+          @click="closeLoginModal()"
+        >Close</v-btn>
+        <v-btn
+          class="web-button cart-button primary"
+          :disabled="!email
+            || !password
+            || (registerView && password !== confirmPassword)"
+        >{{ registerView ? 'Sign Up' : 'Login' }}</v-btn>
+      </v-card>
+    </v-dialog>
+
     <!-- navbar -->
     <div
-      class="navbar d-flex justify-space-between align-center"
+      class="navbar d-flex align-center"
     >
-      <h3 class="logo d-flex justify-start align-center">CustomPCBuilder</h3>
+      <h3 class="logo d-flex align-center">CustomPCBuilder</h3>
       <ul class="d-flex nav-links justify-center align-center">
         <li><a href="#home" v-smooth-scroll>Home</a></li>
         <li><a href="#findParts" v-smooth-scroll>Find Parts</a></li>
@@ -73,6 +124,12 @@
           variant="danger">{{cart.length}}
         </b-badge>
       </button>
+      <v-btn 
+        class="login align-center"
+        @click="loginDialog = true"
+      >
+        Login
+      </v-btn>
     </div>
   </div>
 </template>
@@ -95,6 +152,11 @@ export default {
   },
   data: () => ({
     cartDialog: false,
+    loginDialog: false,
+    registerView: false,
+    email: '',
+    password: '',
+    confirmPassword: ''
   }),
   methods: {
     async removeFromCart(id) {
@@ -102,6 +164,19 @@ export default {
     },
     getImage(src) {
       return new URL(`../assets/images/${src}`, import.meta.url).href;
+    },
+    switchLoginView() {
+      this.registerView = !this.registerView;
+      this.email = '';
+      this.password = '';
+      this.confirmPassword = '';
+    },
+    closeLoginModal() {
+      this.registerView = false;
+      this.email = '';
+      this.password = '';
+      this.confirmPassword = '';
+      this.loginDialog = false;
     }
   },
   created() {
@@ -112,6 +187,24 @@ export default {
 <style scoped>
 .cart-card {
   padding: 15px 0;
+}
+
+.login-card {
+  padding: 15px 30px;
+}
+
+.login-form {
+  padding: 20px 30px;
+}
+
+.login-view-switch {
+  color:#5162ff;
+  width: fit-content;
+}
+
+.login-view-switch:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .item-img {
@@ -135,10 +228,11 @@ export default {
 }
 
 .nav-links {
+  flex-grow: 1;
   text-decoration: none;
   list-style: none;
   position: relative;
-  left: -80px;
+  left: -40px;
   margin-bottom: 0;
 }
 
@@ -171,7 +265,9 @@ export default {
   font-size: 24px;
   padding: 10px 12px;
   border-radius: 5px;
-  margin-left: 15px;
+  padding-left: 25px;
+  height: 36px !important;
+  width: 50px;
 }
 
 .cart-icon {
@@ -181,9 +277,17 @@ export default {
 .badge {
   z-index: 6;
   font-size: 10px;
-  position: absolute;
-  bottom: 18px;
-  right: 20px;
+  position: relative;
+  top: 8px;
+  right: 7px;
+}
+
+.login {
+  display: flex;
+  color: #fff;
+  font-weight: bold;
+  background-color: #6C757D !important;
+  margin-left: 16px;
 }
 
 .cart:hover, .bars:hover {

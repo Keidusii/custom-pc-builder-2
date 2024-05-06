@@ -55,18 +55,20 @@ const store = new Vuex.Store({
     },
     async login(context, item) {
       try {
-        await axios.post('/login', item );
+        const response = await axios.post('/login', item );
         context.dispatch('fetchCart');
+        return response?.data?.loggedIn;
       } catch(err) {
-        console.log(err);
+        throw err;
       }
     },
     async register(context, item) {
       try {
-        await axios.post('/register', item);
+        const response = await axios.post('/register', item);
         context.dispatch('fetchCart');
+        return response?.data?.loggedIn;
       } catch(err) {
-        console.log(err);
+        throw err;
       }
     }
   },

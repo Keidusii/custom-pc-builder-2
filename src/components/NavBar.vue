@@ -71,6 +71,11 @@
             :rules="[ v => v === password || 'Passwords do not match' ]"
             label="Confirm Password"
           ></v-text-field>
+          <small
+            v-if="authErrorMessage"
+            class="text-danger">
+            {{ authErrorMessage }}
+          </small>
           <p
             v-if="!registerView"
             class="login-view-switch"
@@ -127,11 +132,19 @@
           variant="danger">{{cart.length}}
         </b-badge>
       </button>
-      <v-btn 
+      <v-btn
+        v-if="!loggedIn"
         class="login align-center"
         @click="loginDialog = true"
       >
         Login
+      </v-btn>
+      <v-btn 
+        v-else
+        class="login align-center"
+        @click="loggedIn = false"
+      >
+        Log out
       </v-btn>
     </div>
   </div>
@@ -159,7 +172,9 @@ export default {
     registerView: false,
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    authErrorMessage: '',
+    loggedIn: false
   }),
   methods: {
     async removeFromCart(id) {
@@ -173,13 +188,16 @@ export default {
       this.email = '';
       this.password = '';
       this.confirmPassword = '';
+      this.authErrorMessage = '';
     },
     closeLoginModal() {
       this.registerView = false;
       this.email = '';
       this.password = '';
       this.confirmPassword = '';
+      this.authErrorMessage = '';
       this.loginDialog = false;
+      this.loggedIn = false;
     },
     async login() {
       const loginCreds = {
@@ -187,13 +205,25 @@ export default {
         password: this.password
       };
       try {
+        let loggedIn = false;
         if (this.registerView) {
-          await store.dispatch('register', loginCreds);
+          loggedIn = await store.dispatch('register', loginCreds);
         } else {
-          await store.dispatch('login', loginCreds);
+          loggedIn = await store.dispatch('login', loginCreds);
+        }
+        if (loggedIn) {
+          this.loggedIn = true;
+          this.loginDialog = false;
+        } else {
+          throw new Error();
         }
       } catch (error) {
-        console.log(error)
+        if (!this.registerView) {
+          this.authErrorMessage = error?.response?.data
+            || 'An error occurred. Please try again later';
+        } else {
+          this.authErrorMessage = 'An error occurred. Please try again later'
+        }
       }
     }
   },

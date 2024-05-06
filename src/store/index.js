@@ -53,6 +53,22 @@ const store = new Vuex.Store({
         console.log(err);
       }
     },
+    async login(context, item) {
+      try {
+        await axios.post('/login', item );
+        context.dispatch('fetchCart');
+      } catch(err) {
+        console.log(err);
+      }
+    },
+    async register(context, item) {
+      try {
+        await axios.post('/register', item);
+        context.dispatch('fetchCart');
+      } catch(err) {
+        console.log(err);
+      }
+    }
   },
   mutations: {
     setCart(state, items) {

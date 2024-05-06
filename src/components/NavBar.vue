@@ -91,7 +91,10 @@
           :disabled="!email
             || !password
             || (registerView && password !== confirmPassword)"
-        >{{ registerView ? 'Sign Up' : 'Login' }}</v-btn>
+          @click="login()"
+        >
+          {{ registerView ? 'Sign Up' : 'Login' }}
+        </v-btn>
       </v-card>
     </v-dialog>
 
@@ -177,6 +180,21 @@ export default {
       this.password = '';
       this.confirmPassword = '';
       this.loginDialog = false;
+    },
+    async login() {
+      const loginCreds = {
+        email: this.email,
+        password: this.password
+      };
+      try {
+        if (this.registerView) {
+          await store.dispatch('register', loginCreds);
+        } else {
+          await store.dispatch('login', loginCreds);
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   created() {

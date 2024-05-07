@@ -57,24 +57,34 @@
         <v-form class="login-form">
           <v-text-field
             v-model="email"
-            :rules="[ v => !!v || 'Required' ]"
+            :rules="[ rules.required, rules.validEmail ]"
             label="E-mail"
           ></v-text-field>
           <v-text-field
             v-model="password"
-            :rules="[ v => !!v || 'Required' ]"
+            :rules="[ rules.required, rules.validPassword ]"
             label="Password"
           ></v-text-field>
           <v-text-field
             v-if="registerView"
             v-model="confirmPassword"
-            :rules="[ v => v === password || 'Passwords do not match' ]"
+            :rules="[ rules.required, rules.passwordsMatch(confirmPassword, password) ]"
             label="Confirm Password"
           ></v-text-field>
           <small
             v-if="authErrorMessage"
             class="text-danger">
             {{ authErrorMessage }}
+          </small>
+          <small
+            v-if="registerView"
+          >
+            Password must meet the following requirements:
+            <ul>
+              <li>Must have between 8 and 100 characters</li>
+              <li>Must have at least 1 number</li>
+              <li>Must have at least 1 special character</li>
+            </ul>
           </small>
           <p
             v-if="!registerView"
@@ -95,6 +105,8 @@
           class="web-button cart-button primary"
           :disabled="!email
             || !password
+            || rules.validEmail(email) !== true
+            || rules.validPassword(password) !== true
             || (registerView && password !== confirmPassword)"
           @click="login()"
         >
@@ -174,7 +186,19 @@ export default {
     password: '',
     confirmPassword: '',
     authErrorMessage: '',
-    loggedIn: false
+    loggedIn: false,
+    rules: {
+      required: (v) => !!v || 'Required',
+      validEmail: (v) => {
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        return emailRegex.test(v) || 'Email is not a valid email address'
+      },
+      validPassword: (v) => {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,100}$/;
+        return passwordRegex.test(v) || 'Password does not meet requirements'
+      },
+      passwordsMatch: (v, password) => v === password || 'Passwords do not match'
+    }
   }),
   methods: {
     async removeFromCart(id) {

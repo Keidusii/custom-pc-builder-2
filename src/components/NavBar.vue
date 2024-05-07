@@ -144,7 +144,6 @@
           fa fa-cart-shopping
         </v-icon>
         <b-badge 
-          v-if="cart.length > 0" 
           class="badge d-inline"
           variant="danger">{{cart.length}}
         </b-badge>

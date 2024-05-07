@@ -62,12 +62,14 @@
           ></v-text-field>
           <v-text-field
             v-model="password"
+            type="password"
             :rules="[ rules.required, rules.validPassword ]"
             label="Password"
           ></v-text-field>
           <v-text-field
             v-if="registerView"
             v-model="confirmPassword"
+            type="password"
             :rules="[ rules.required, rules.passwordsMatch(confirmPassword, password) ]"
             label="Confirm Password"
           ></v-text-field>
@@ -76,16 +78,19 @@
             class="text-danger">
             {{ authErrorMessage }}
           </small>
-          <small
+          <p
             v-if="registerView"
+            class="text-left"
           >
             Password must meet the following requirements:
-            <ul>
-              <li>Must have between 8 and 100 characters</li>
-              <li>Must have at least 1 number</li>
-              <li>Must have at least 1 special character</li>
-            </ul>
-          </small>
+            <small>
+              <ul class="text-left">
+                <li>Must have between 8 and 100 characters</li>
+                <li>Must have at least 1 number</li>
+                <li>Must have at least 1 special character</li>
+              </ul>
+            </small>
+          </p>
           <p
             v-if="!registerView"
             class="login-view-switch"
@@ -242,12 +247,8 @@ export default {
           throw new Error();
         }
       } catch (error) {
-        if (!this.registerView) {
-          this.authErrorMessage = error?.response?.data
-            || 'An error occurred. Please try again later';
-        } else {
-          this.authErrorMessage = 'An error occurred. Please try again later'
-        }
+        this.authErrorMessage = error?.response?.data
+          || 'An error occurred. Please try again later';
       }
     }
   },
